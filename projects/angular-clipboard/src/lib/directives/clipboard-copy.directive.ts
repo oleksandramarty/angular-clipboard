@@ -2,6 +2,7 @@ import {Directive, ElementRef, HostListener, Inject, Input, Optional, Renderer2,
 import {API_CONFIG_TOKEN} from "../di";
 import {ApiConfig, defaultConfig} from "../models/config.model";
 import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
+import {ClipboardCopyService} from "../clipboard-copy.service";
 
 @Directive({
   selector: '[clipboard]'
@@ -13,10 +14,16 @@ export class ClipboardCopyDirective {
 
   constructor(
     @Optional() @Inject(API_CONFIG_TOKEN) private readonly config: ApiConfig | null,
+    private readonly clipboardService: ClipboardCopyService,
     private el: ElementRef,
     private renderer: Renderer2,
     private sanitizer: DomSanitizer,
-    ) { }
+    ) {
+    // set style cursor to pointer
+    if (!!this.config?.pointer) {
+      this.renderer.setStyle(this.el.nativeElement, 'cursor', 'pointer');
+    }
+  }
 
 
   @HostListener('click') onClick() {
@@ -32,9 +39,22 @@ export class ClipboardCopyDirective {
       return;
     }
 
+    this.clipboardService.clipboardCopyStatusSource.next(true);
+
     if (!this.messageDiv) {
       this.messageDiv = this.renderer.createElement('div');
-      this.renderer.addClass(this.messageDiv, 'copy-message');
+      if (!!this.config?.useDefaultStyle) {
+        this.renderer.addClass(this.messageDiv, defaultConfig.defaultCssClass);
+        this.renderer.setStyle(this.messageDiv, 'background-color', '#333');
+        this.renderer.setStyle(this.messageDiv, 'color', '#fff');
+        this.renderer.setStyle(this.messageDiv, 'font-size', '16px');
+        this.renderer.setStyle(this.messageDiv, 'padding', '10px');
+        this.renderer.setStyle(this.messageDiv, 'border-radius', '5px');
+        this.renderer.setStyle(this.messageDiv, 'position', 'fixed');
+        this.renderer.setStyle(this.messageDiv, 'bottom', '10px');
+        this.renderer.setStyle(this.messageDiv, 'left', '50%');
+        this.renderer.setStyle(this.messageDiv, 'transform', 'translate(-50%, -10px)');
+      }
       if (!!this.config.cssClass) {
         this.renderer.addClass(this.messageDiv, this.config.cssClass);
       }

@@ -4,6 +4,7 @@ import { TestBed, ComponentFixture } from '@angular/core/testing';
 import { By } from '@angular/platform-browser';
 import {API_CONFIG_TOKEN} from "../di";
 import {ApiConfig} from "../models/config.model";
+import {ClipboardCopyService} from "../clipboard-copy.service";
 
 @Component({
   template: `
@@ -18,15 +19,20 @@ describe('ClipboardCopyDirective', () => {
   let pElement: DebugElement;
   let directiveEl: DebugElement;
 
+  const defaultCssClass = 'copy-message-toast';
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ ClipboardCopyDirective, TestComponent ],
       providers:[
+        ClipboardCopyService,
         ClipboardCopyDirective,
         { provide: API_CONFIG_TOKEN, useValue: {
+            pointer: true,
             showToast: true,
             text: 'Text copied!',
             duration: 3000,
+            useDefaultStyle: true,
             cssClass: 'toast',
           } } // Provide the mock config object
       ]
@@ -56,11 +62,11 @@ describe('ClipboardCopyDirective', () => {
   it('should display toast message on copy', () => {
     spyOn(document, 'execCommand');
     directiveEl.triggerEventHandler('click', null);
-    const messageDiv = document.querySelector('.copy-message');
+    const messageDiv = document.querySelector(`.${defaultCssClass}`);
     expect(messageDiv).toBeTruthy();
     expect(messageDiv!.textContent).toBe('Text copied!');
     setTimeout(() => {
-      expect(document.querySelector('.copy-message')).toBeFalsy();
+      expect(document.querySelector(`.${defaultCssClass}`)).toBeFalsy();
     }, 3000);
   });
 
@@ -74,20 +80,20 @@ describe('ClipboardCopyDirective', () => {
   it('should display toast message on copy', () => {
     spyOn(document, 'execCommand');
     pElement.triggerEventHandler('click', null);
-    const messageDiv = document.querySelector('.copy-message');
+    const messageDiv = document.querySelector(`.${defaultCssClass}`);
     expect(messageDiv).toBeTruthy();
     expect(messageDiv!.textContent).toBe('Text copied!');
     setTimeout(() => {
-      expect(document.querySelector('.copy-message')).toBeFalsy();
+      expect(document.querySelector(`.${defaultCssClass}`)).toBeFalsy();
     }, 3000);
   });
 
   it('should add custom CSS class to toast message', () => {
     spyOn(document, 'execCommand');
     pElement.triggerEventHandler('click', null);
-    const messageDiv = document.querySelector('.copy-message');
+    const messageDiv = document.querySelector(`.${defaultCssClass}`);
     expect(messageDiv).toBeTruthy();
-    expect(messageDiv!.classList).toContain('copy-message');
+    expect(messageDiv!.classList).toContain(defaultCssClass);
     expect(messageDiv!.classList).toContain('toast');
   });
 });

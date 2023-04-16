@@ -2,6 +2,7 @@ import {ModuleWithProviders, NgModule} from '@angular/core';
 import {ClipboardCopyDirective} from "./directives/clipboard-copy.directive";
 import {API_CONFIG_TOKEN} from "./di";
 import {ApiConfig, defaultConfig} from "./models/config.model";
+import {ClipboardCopyService} from "./clipboard-copy.service";
 
 
 
@@ -23,6 +24,7 @@ export class AngularClipboardModule {
       providers: [
         { provide: API_CONFIG_TOKEN, useValue: config ?? defaultConfig },
         ClipboardCopyDirective,
+        ClipboardCopyService,
       ],
     }
   }
