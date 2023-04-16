@@ -1,12 +1,19 @@
 {
-  "name": "angular-clipboard",
-  "version": "0.0.10",
+  "name": "angular-copy-text-to-clipboard",
+  "version": "1.0.0",
   "description": "Copy text into clipboard!",
+  "license": "MIT",
   "peerDependencies": {
     "@angular/common": "^12.0.5",
     "@angular/core": "^12.0.5"
   },
   "dependencies": {
     "tslib": "^2.1.0"
-  }
+  },
+  "keywords": [
+    "angular",
+    "angular2",
+    "clipboard",
+    "copy"
+  ]
 }

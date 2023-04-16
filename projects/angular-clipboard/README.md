@@ -31,28 +31,29 @@ import {ClipboardCopyService} from "angular-clipboard";
 
 export class MovieListComponent implements OnInit, OnDestroy {
   protected ngUnsubscribe: Subject<void> = new Subject<void>();
-  
-... 
 
-constructor(private readonly clipboardCopyService: ClipboardCopyService) {
-  this.clipboardCopyService.clipboardCopyStatus$
-    .pipe((takeUntil(this.ngUnsubscribe)))
-    .subscribe(data => {
-      if (!!data) {
-        // Text copied!
-      }
-    })
-}
+...
+
+  constructor(private readonly clipboardCopyService: ClipboardCopyService) {
+    this.clipboardCopyService.clipboardCopyStatus$
+      .pipe((takeUntil(this.ngUnsubscribe)))
+      .subscribe(data => {
+        if (!!data) {
+          // Text copied!
+        }
+      })
+  }
 ```
 
 ## Usage `ClipboardCopyDirective` in `html`
 ```html
 <p clipboard>My text</p> <!-- Clipboard = My text -->
+<p>My text</p> <i class="your icon" clipboard [text]="'My text'"></i> <!-- Clipboard = My text -->
 <p clipboard [text]="'My custom text 1'">My text</p> <!-- Clipboard = My custom text 1 -->
 <p clipboard clipboard text="My custom text 2">My text</p> <!-- Clipboard = My custom text 2 -->
 ```
 
-## About
+## Tips
 
 For copy notification you can use:
 - `showToast` = true
