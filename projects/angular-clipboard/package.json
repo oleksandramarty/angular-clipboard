@@ -1,6 +1,6 @@
 {
   "name": "angular-copy-text-to-clipboard",
-  "version": "1.0.0",
+  "version": "1.0.2",
   "description": "Copy text into clipboard!",
   "license": "MIT",
   "peerDependencies": {

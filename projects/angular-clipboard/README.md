@@ -1,7 +1,6 @@
 ## Setting up in `module's imports`
-```tsimport {AngularClipboardModule} from "angular-copy-text-to-clipboard";
-
-...
+```ts
+import {AngularClipboardModule} from "angular-copy-text-to-clipboard";
 
 AngularClipboardModule.forRoot({
   text: 'Copied!', // Custom toast text or html
@@ -30,12 +29,8 @@ NOTE: Config optional
 ```ts
 import {ClipboardCopyService} from "angular-copy-text-to-clipboard";
 
-...
-
 export class MovieListComponent implements OnInit, OnDestroy {
   protected ngUnsubscribe: Subject<void> = new Subject<void>();
-
-...
 
   constructor(private readonly clipboardCopyService: ClipboardCopyService) {
     this.clipboardCopyService.clipboardCopyStatus$
