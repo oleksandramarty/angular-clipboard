@@ -13,7 +13,7 @@ AngularClipboardModule.forRoot({
 ```
 
 ```ts
-NOTE: Config optional
+NOTE: Config is optional
 ```
 
 | Key               | Type       | Optional  | Default value               |
