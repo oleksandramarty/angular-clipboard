@@ -1,25 +1,3 @@
-## Config options model
-```ts
-export interface ApiConfig {
-  pointer?: boolean | null | undefined,
-  showToast?: boolean | null | undefined,
-  duration?: number | null | undefined,
-  useDefaultStyle?: boolean | null | undefined,
-  cssClass?: string | null | undefined,
-  text?: string | null | undefined,
-}
-
-export const defaultConfig = {
-  pointer: true,
-  showToast: true,
-  duration: 3000,
-  useDefaultStyle: true,
-  cssClass: '',
-  text: 'Text copied to clipboard!',
-  defaultCssClass: 'copy-message-toast',
-}
-```
-
 ## Setting up in `module's imports`
 ```ts
 AngularClipboardModule.forRoot({
@@ -35,6 +13,15 @@ AngularClipboardModule.forRoot({
 ```ts
 NOTE: Config optional
 ```
+
+| Key               | Type       | Optional  | Default value               |
+|-------------------|------------|-----------|-----------------------------|
+| `pointer`         | `boolean`  | `yes`     | `true`                      |
+| `showToast`       | `boolean`  | `yes`     | `true`                      |
+| `duration`        | `number`   | `yes`     | `3000`                      |
+| `useDefaultStyle` | `boolean`  | `yes`     | `true`                      |
+| `cssClass`        | `string`   | `yes`     | ` `                         |
+| `text`            | `string`   | `yes`     | `Text copied to clipboard!` |
 
 ## Usage `ClipboardCopyService` in `ts`
 ```ts
