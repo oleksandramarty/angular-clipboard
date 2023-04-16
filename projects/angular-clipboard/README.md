@@ -1,24 +1,73 @@
-# AngularClipboard
+## Config options model
+```ts
+export interface ApiConfig {
+  pointer?: boolean | null | undefined,
+  showToast?: boolean | null | undefined,
+  duration?: number | null | undefined,
+  useDefaultStyle?: boolean | null | undefined,
+  cssClass?: string | null | undefined,
+  text?: string | null | undefined,
+}
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.0.5.
+export const defaultConfig = {
+  pointer: true,
+  showToast: true,
+  duration: 3000,
+  useDefaultStyle: true,
+  cssClass: '',
+  text: 'Text copied to clipboard!',
+  defaultCssClass: 'copy-message-toast',
+}
+```
 
-## Code scaffolding
+## Setting up in `module's imports`
+```ts
+AngularClipboardModule.forRoot({
+  text: 'Copied!', // Custom toast text or html
+  cssClass: 'test', // Custom style
+  duration: 3000, // Toast duration
+  showToast: true, // Show toast
+  useDefaultStyle: true, // Default toast style
+  pointer: true, // Set cursor pointer for clipboard html el
+}),
+```
 
-Run `ng generate component component-name --project angular-clipboard` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project angular-clipboard`.
-> Note: Don't forget to add `--project angular-clipboard` or else it will be added to the default project in your `angular.json` file. 
+```ts
+NOTE: Config optional
+```
 
-## Build
+## Usage `ClipboardCopyService` in `ts`
+```ts
+import {ClipboardCopyService} from "angular-clipboard";
 
-Run `ng build angular-clipboard` to build the project. The build artifacts will be stored in the `dist/` directory.
+...
 
-## Publishing
+export class MovieListComponent implements OnInit, OnDestroy {
+  protected ngUnsubscribe: Subject<void> = new Subject<void>();
+  
+... 
 
-After building your library with `ng build angular-clipboard`, go to the dist folder `cd dist/angular-clipboard` and run `npm publish`.
+constructor(private readonly clipboardCopyService: ClipboardCopyService) {
+  this.clipboardCopyService.clipboardCopyStatus$
+    .pipe((takeUntil(this.ngUnsubscribe)))
+    .subscribe(data => {
+      if (!!data) {
+        // Text copied!
+      }
+    })
+}
+```
 
-## Running unit tests
+## Usage `PhoneFormatPipe` in `html`
+```html
+<p clipboard>My text</p> <!-- Clipboard = My text -->
+<p clipboard [text]="'My custom text 1'">My text</p> <!-- Clipboard = My custom text 1 -->
+<p clipboard clipboard text="My custom text 2">My text</p> <!-- Clipboard = My custom text 2 -->
+```
 
-Run `ng test angular-clipboard` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## About
 
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+For copy notification you can use:
+- `showToast` = true
+- `ClipboardCopyService`
+- `(click)`

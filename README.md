@@ -1,27 +1,73 @@
-# AngularClipboard
+## Config options model
+```ts
+export interface ApiConfig {
+  pointer?: boolean | null | undefined,
+  showToast?: boolean | null | undefined,
+  duration?: number | null | undefined,
+  useDefaultStyle?: boolean | null | undefined,
+  cssClass?: string | null | undefined,
+  text?: string | null | undefined,
+}
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 12.0.2.
+export const defaultConfig = {
+  pointer: true,
+  showToast: true,
+  duration: 3000,
+  useDefaultStyle: true,
+  cssClass: '',
+  text: 'Text copied to clipboard!',
+  defaultCssClass: 'copy-message-toast',
+}
+```
 
-## Development server
+## Setting up in `module's imports`
+```ts
+AngularClipboardModule.forRoot({
+  text: 'Copied!', // Custom toast text or html
+  cssClass: 'test', // Custom style
+  duration: 3000, // Toast duration
+  showToast: true, // Show toast
+  useDefaultStyle: true, // Default toast style
+  pointer: true, // Set cursor pointer for clipboard html el
+}),
+```
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+```ts
+NOTE: Config optional
+```
 
-## Code scaffolding
+## Usage `ClipboardCopyService` in `ts`
+```ts
+import {ClipboardCopyService} from "angular-clipboard";
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+...
 
-## Build
+export class MovieListComponent implements OnInit, OnDestroy {
+  protected ngUnsubscribe: Subject<void> = new Subject<void>();
+  
+... 
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+constructor(private readonly clipboardCopyService: ClipboardCopyService) {
+  this.clipboardCopyService.clipboardCopyStatus$
+    .pipe((takeUntil(this.ngUnsubscribe)))
+    .subscribe(data => {
+      if (!!data) {
+        // Text copied!
+      }
+    })
+}
+```
 
-## Running unit tests
+## Usage `PhoneFormatPipe` in `html`
+```html
+<p clipboard>My text</p> <!-- Clipboard = My text -->
+<p clipboard [text]="'My custom text 1'">My text</p> <!-- Clipboard = My custom text 1 -->
+<p clipboard clipboard text="My custom text 2">My text</p> <!-- Clipboard = My custom text 2 -->
+```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## About
 
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+For copy notification you can use:
+- `showToast` = true 
+- `ClipboardCopyService`
+- `(click)`
