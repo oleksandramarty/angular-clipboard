@@ -58,7 +58,7 @@ constructor(private readonly clipboardCopyService: ClipboardCopyService) {
 }
 ```
 
-## Usage `PhoneFormatPipe` in `html`
+## Usage `ClipboardCopyDirective` in `html`
 ```html
 <p clipboard>My text</p> <!-- Clipboard = My text -->
 <p clipboard [text]="'My custom text 1'">My text</p> <!-- Clipboard = My custom text 1 -->
