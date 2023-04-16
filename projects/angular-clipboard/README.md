@@ -68,6 +68,6 @@ constructor(private readonly clipboardCopyService: ClipboardCopyService) {
 ## About
 
 For copy notification you can use:
-- `showToast` = true 
+- `showToast` = true
 - `ClipboardCopyService`
 - `(click)`
