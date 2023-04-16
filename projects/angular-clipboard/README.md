@@ -1,5 +1,8 @@
 ## Setting up in `module's imports`
-```ts
+```tsimport {AngularClipboardModule} from "angular-copy-text-to-clipboard";
+
+...
+
 AngularClipboardModule.forRoot({
   text: 'Copied!', // Custom toast text or html
   cssClass: 'test', // Custom style
@@ -25,7 +28,7 @@ NOTE: Config optional
 
 ## Usage `ClipboardCopyService` in `ts`
 ```ts
-import {ClipboardCopyService} from "angular-clipboard";
+import {ClipboardCopyService} from "angular-copy-text-to-clipboard";
 
 ...
 

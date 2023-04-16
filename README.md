@@ -1,5 +1,8 @@
 ## Setting up in `module's imports`
-```ts
+```tsimport {AngularClipboardModule} from "angular-copy-text-to-clipboard";
+
+...
+
 AngularClipboardModule.forRoot({
   text: 'Copied!', // Custom toast text or html
   cssClass: 'test', // Custom style
@@ -25,24 +28,24 @@ NOTE: Config optional
 
 ## Usage `ClipboardCopyService` in `ts`
 ```ts
-import {ClipboardCopyService} from "angular-clipboard";
+import {ClipboardCopyService} from "angular-copy-text-to-clipboard";
 
 ...
 
 export class MovieListComponent implements OnInit, OnDestroy {
   protected ngUnsubscribe: Subject<void> = new Subject<void>();
-  
-... 
 
-constructor(private readonly clipboardCopyService: ClipboardCopyService) {
-  this.clipboardCopyService.clipboardCopyStatus$
-    .pipe((takeUntil(this.ngUnsubscribe)))
-    .subscribe(data => {
-      if (!!data) {
-        // Text copied!
-      }
-    })
-}
+...
+
+  constructor(private readonly clipboardCopyService: ClipboardCopyService) {
+    this.clipboardCopyService.clipboardCopyStatus$
+      .pipe((takeUntil(this.ngUnsubscribe)))
+      .subscribe(data => {
+        if (!!data) {
+          // Text copied!
+        }
+      })
+  }
 ```
 
 ## Usage `ClipboardCopyDirective` in `html`
@@ -56,6 +59,6 @@ constructor(private readonly clipboardCopyService: ClipboardCopyService) {
 ## Tips
 
 For copy notification you can use:
-- `showToast` = true 
+- `showToast` = true
 - `ClipboardCopyService`
 - `(click)`
